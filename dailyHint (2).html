@@ -26,6 +26,13 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        /* Remove flex-direction: column; */
+    }
+    .side-by-side {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 24px; /* Espaço entre os elementos */
     }
     #date {
         text-align: center;
@@ -54,8 +61,14 @@
         padding-bottom: 3.5px;
     }
     .message {
-        margin: 18px auto 0 auto;
-        width: 170px;
+        margin: 0;
+        min-height: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        max-width: 350px;
         text-align: center;
         border-radius: 10px;
         border: 1.5px solid #2972b6;
@@ -68,14 +81,20 @@
         font-size: 8px;
         font-weight: 700;
         font-family: 'Comfortaa', cursive;
-        padding: 10px 0;
+        padding: 10px 12px;
+        box-sizing: border-box;
+        overflow: hidden;
+        white-space: normal; /* Permite múltiplas linhas */
+        line-height: 1.2;
     }
 </style>
 </head>
 <body>
-    <div class="container" style="flex-direction: column;">
-        <div id="date"></div>
-        <div class="message"></div>
+    <div class="container">
+        <div class="side-by-side">
+            <div id="date"></div>
+            <div class="message"></div>
+        </div>
     </div>
 
     <script>
