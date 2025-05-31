@@ -1,0 +1,19 @@
+    const dicas = [
+      "Gripe | Lavar bem as mãos reduz o contágio.",
+      "Hipertensão | Reduz o sal na alimentação.",
+      "Diabetes | Evita bebidas açucaradas.",
+      "Ansiedade | Pratica respiração profunda.",
+      "Insónia | Evita ecrãs antes de dormir.",
+      "Asma | Evita ambientes com poeiras.",
+      "Covid-19 | Usa máscara em locais fechados.",
+    ];
+
+    function enviarDica() {
+      const hoje = new Date();
+      const diaDoAno = Math.floor((hoje - new Date(hoje.getFullYear(), 0, 0)) / 86400000);
+      const dica = dicas[diaDoAno % dicas.length]; // garante que não excede
+      window.ReactNativeWebView?.postMessage(dica); // envia para o Thunkable
+    }
+
+    window.onload = enviarDica;
+  
