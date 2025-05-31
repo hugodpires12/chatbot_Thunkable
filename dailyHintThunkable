@@ -1,3 +1,9 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Dica de Saúde</title>
+  <script>
     const dicas = [
       "Gripe | Lavar bem as mãos reduz o contágio.",
       "Hipertensão | Reduz o sal na alimentação.",
@@ -8,12 +14,26 @@
       "Covid-19 | Usa máscara em locais fechados.",
     ];
 
-    function enviarDica() {
-      const hoje = new Date();
-      const diaDoAno = Math.floor((hoje - new Date(hoje.getFullYear(), 0, 0)) / 86400000);
-      const dica = dicas[diaDoAno % dicas.length]; // garante que não excede
-      window.ReactNativeWebView?.postMessage(dica); // envia para o Thunkable
+    let indiceDica = 0; // variável que começa em 0
+
+    function mostrarDicaNaPagina() {
+      const dica = dicas[indiceDica % dicas.length];
+      document.getElementById('dica').textContent = dica;
+      window.ReactNativeWebView?.postMessage(dica);
     }
 
-    window.onload = enviarDica;
-  
+    function proximaDica() {
+      indiceDica++;
+      mostrarDicaNaPagina();
+    }
+
+    window.onload = function() {
+      mostrarDicaNaPagina();
+    };
+  </script>
+</head>
+<body>
+  <div id="dica"></div>
+  <button onclick="proximaDica()">Próxima dica</button>
+</body>
+</html>
