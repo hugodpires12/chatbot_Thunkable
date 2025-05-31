@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendário Desafio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,900i" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Comfortaa:400,700" rel="stylesheet">
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    body {
+        background: #fafaf3;
+        color: #2c3e50;
+        font-family: 'Comfortaa', cursive;
+    }
+    .container {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #date {
+        text-align: center;
+        box-sizing: border-box;
+        height: 250px;
+        width: 230px;
+        border-radius: 30px;
+        border: 10px solid #2972b6;
+        box-shadow:
+            2px 2px 2px #2c3e50,
+            -2px 2px 2px #2c3e50,
+            -2px -2px 2px #2c3e50,
+            2px -2px 2px #2c3e50;
+        margin-top: 0; /* Remova o margin-top antigo */
+        padding-top: 60px;
+        background: #d4e3f3;
+        font-size: 30px;
+        font-weight: 900;
+    }
+    #date span {
+        display: block;
+        font-family: 'Raleway';
+        font-weight: 700;
+        font-size: 60px;
+        line-height: 45px;
+        padding-bottom: 15px;
+    }
+    .message {
+        margin: 80px auto 0 auto;
+        width: 600px; /* Mais esticada */
+        text-align: center;
+        border-radius: 30px;
+        border: 5px solid #2972b6;
+        box-shadow:
+            2px 2px 2px #2c3e50,
+            -2px 2px 2px #2c3e50,
+            -2px -2px 2px #2c3e50,
+            2px -2px 2px #2c3e50;
+        background: #ffeda9;
+        font-size: 28px;
+        font-weight: 700;
+        font-family: 'Comfortaa', cursive;
+        padding: 30px 0;
+    }
+</style>
+</head>
+<body>
+    <div class="container" style="flex-direction: column;">
+        <div id="date"></div>
+        <div class="message"></div>
+    </div>
+
+    <script>
+    let hints = [    ]
+var date = new Date();
+var day = date.getDate();
+var year = date.getFullYear();
+
+var month = date.getMonth();
+var monthLabels= ["January", "February",  "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+function Day(){
+    month = monthLabels[month];
+    document.getElementById("date").innerHTML = month.toUpperCase() + " " + "<span>" + day + "</span>" + year;  
+}
+
+Day();
+
+
+let dicasDiarias = [
+    "Usar soro fisiológico ajuda a soltar o ranho e facilita a respiração.",
+    "Aspirar suavemente o nariz antes de dormir pode melhorar o sono do bebé.",
+    "Evitar ambientes com fumo ou pó, que aumentam as mucosidades.",
+    "Um banho com vapor pode ajudar a desobstruir o nariz.",
+    "Não se deve oferecer alimentos duros ou com casca a bebés (ex: uvas inteiras).",
+    "O bebé deve estar sentado enquanto come, não deitado.",
+    "É importante aprender a manobra de desengasgamento — pode salvar vidas.",
+    "O leite materno pode reduzir o risco de engasgamento nos primeiros meses.",
+    "As otites são comuns após constipações — vigiar sinais como febre ou choro ao deitar.",
+    "Se suspeitar de otite, não deve introduzir nada no ouvido da criança.",
+    "Após banho ou piscina, os ouvidos devem ser secos por fora com uma toalha.",
+    "Usar gorro no inverno pode ajudar a prevenir infeções de ouvido.",
+    "Não se deve coçar as borbulhas da varicela — pode causar cicatrizes.",
+    "Roupas frescas e unhas cortadas ajudam a aliviar o desconforto da varicela.",
+    "Um banho com aveia pode acalmar a pele durante a varicela.",
+    "A criança com varicela deve ser afastada de grávidas e pessoas imunodeprimidas.",
+    "Fruta com casca (como pêra e maçã) pode ajudar no trânsito intestinal.",
+    "Criar o hábito de sentar no bacio ou sanita em horários regulares pode ajudar.",
+    "Beber água ao longo do dia evita fezes duras.",
+    "Deve evitar oferecer leite em excesso se a criança estiver com prisão de ventre.",
+    "Oferecer pequenos goles de água ajuda a evitar desidratação após vómitos.",
+    "Deve evitar alimentos sólidos nas primeiras horas após vómito.",
+    "Se o vómito for em jato ou com sangue, deve procurar um médico de imediato.",
+    "Soro oral caseiro pode ajudar na recuperação (1L água + 1 c. chá sal + 2 c. sopa açúcar).",
+    "Banana madura e arroz cozido ajudam a controlar a diarreia.",
+    "A hidratação é essencial — deve oferecer líquidos com frequência.",
+    "Durante a diarreia, deve evitar leite, sumos ou refrigerantes.",
+    "Lavar bem as mãos da criança e de quem cuida ajuda a evitar contágio.",
+    "Massagens na barriga em movimentos circulares podem aliviar as cólicas.",
+    "Manter o bebé na posição vertical após a mamada ajuda a expulsar gases.",
+    "As cólicas nos bebés são comuns e costumam desaparecer por volta dos 3 meses.",
+    "Um banho morno pode acalmar o desconforto das cólicas.",
+    "Deve evitar chantagens ou castigos à mesa — podem gerar ansiedade.",
+    "Oferecer porções pequenas e variadas ajuda a melhorar o apetite.",
+    "Dar o exemplo com boa alimentação incentiva a criança a comer melhor.",
+    "É importante respeitar os sinais de fome e saciedade da criança.",
+    "Muitos sopros cardíacos em crianças são inofensivos e desaparecem com o tempo.",
+    "Não se deve limitar a atividade física sem indicação médica.",
+    "Um pediatra pode ouvir um sopro mesmo em crianças saudáveis.",
+    "Exames como o ecocardiograma confirmam se o sopro é funcional.",
+    "Deve usar a medicação de alívio ao primeiro sinal de pieira ou tosse.",
+    "Ambientes com pó, ácaros ou fumo podem piorar a asma.",
+    "A respiração com lábios franzidos (como a soprar uma vela) pode ajudar na crise de asma.",
+    "Crianças com asma controlada podem praticar atividade física normalmente.",
+    "À noite, deve reduzir a ingestão de líquidos e incentivar a ida à casa de banho.",
+    "Não se deve repreender a criança por fazer xixi na cama — não é de propósito.",
+    "Elogiar as noites secas pode ajudar a motivar a criança.",
+    "Usar colchões e tapetes com proteção lavável facilita a rotina.",
+    "Não se deve forçar a retração do prepúcio — pode causar feridas.",
+    "Na maioria dos casos, a fimose resolve-se naturalmente até aos 5 anos."
+  ];
+
+
+// Seleciona uma dica diferente para cada dia do ano, baseada no dia do ano
+function getDailyTip() {
+    const today = new Date();
+    // Calcula o dia do ano (0-365)
+    const start = new Date(today.getFullYear(), 0, 0);
+    const diff = today - start;
+    const oneDay = 1000 * 60 * 60 * 24;
+    const dayOfYear = Math.floor(diff / oneDay);
+    // Seleciona a dica correspondente (usa o resto para não ultrapassar o array)
+    return dicasDiarias[dayOfYear % dicasDiarias.length];
+}
+
+// Mostra a dica diária na div .message
+document.querySelector('.message').innerText = getDailyTip();
+</script>
+</body>
+</html>
