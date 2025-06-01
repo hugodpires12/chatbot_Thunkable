@@ -6,7 +6,7 @@
   <title>Chatbot de Saúde</title>
   <style>
     body {
-        background: #f5f6fa;
+        background: #fafaf3;
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
