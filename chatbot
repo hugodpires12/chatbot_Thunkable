@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chatbot de Saúde</title>
+  <style>
+    body {
+      background: #f5f6fa;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .chatbot-container {
+      width: 400px;
+      max-width: 100vw;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      height: 600px;
+    }
+    .chat-header {
+      background: #2972b6;
+      color: #FAFAF3;
+      padding: 18px;
+      border-radius: 12px 12px 0 0;
+      font-size: 1.3em;
+      font-weight: bold;
+      text-align: left;
+      position: relative;
+    }
+    .clear-btn {
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #ffeda9;
+      border: none;
+      color: #2972b6;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: background 0.2s;
+    }
+    .clear-btn:hover {
+      background: #2c3e50;
+      color: #FAFAF3;
+    }
+    .chat-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .card {
+      max-width: 80%;
+      padding: 14px 18px;
+      border-radius: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      font-size: 1em;
+      word-break: break-word;
+    }
+    .card.user {
+      align-self: flex-end;
+      background: #ffeda9;
+      color: #2c3e50;
+    }
+    .card.bot {
+      align-self: flex-start;
+      background: #2972b6;
+      color: #FAFAF3;
+    }
+    .chat-input-area {
+      display: flex;
+      border-top: 1px solid #e0e0e0;
+      padding: 12px;
+      background: #fafbfc;
+      border-radius: 0 0 12px 12px;
+    }
+    .chat-input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #cfd8dc;
+      border-radius: 8px;
+      font-size: 1em;
+      outline: none;
+    }
+    .chat-send-btn {
+      background: #ffeda9;
+      color: #2972b6;
+      border: none;
+      border-radius: 8px;
+      padding: 0 18px;
+      margin-left: 10px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .chat-send-btn:hover {
+      background: #2972b6;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="chatbot-container">
+    <div class="chat-header">
+      Chat Dr.CUF
+      <button class="clear-btn" id="clear-chat-btn" title="Novo Chat">Nova Conversa</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <!-- Cards de perguntas e respostas aparecerão aqui -->
+    </div>
+    <form class="chat-input-area" id="chat-form" autocomplete="off">
+      <input type="text" class="chat-input" id="chat-input" placeholder="Digite sua pergunta..." required>
+      <button type="submit" class="chat-send-btn">Enviar</button>
+    </form>
+  </div>
+
+<script>
+  const chatMessages = document.getElementById('chat-messages');
+  const chatForm = document.getElementById('chat-form');
+  const chatInput = document.getElementById('chat-input');
+  const clearChatBtn = document.getElementById('clear-chat-btn');
+
+  function addCard(message, sender) {
+    const card = document.createElement('div');
+    card.className = 'card ' + sender;
+    card.textContent = message;
+    chatMessages.appendChild(card);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  chatForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const userInput = chatInput.value.trim();
+    if (!userInput) return;
+    addCard(userInput, 'user');
+    chatInput.value = '';
+    const botResponse = getBotResponse(userInput);
+    setTimeout(() => addCard(botResponse, 'bot'), 400);
+  });
+
+  clearChatBtn.addEventListener('click', function() {
+    clearChat();
+  });
+
+  function clearChat() {
+    chatMessages.innerHTML = '';
+  }
+
+  function getBotResponse(input) {
+    const sintomas = [
+      "vomitos", "diarreia", "febre", "otite", "dor de ouvidos", "varicela",
+      "obstipacao", "colicas", "engasgamento", "convulsoes",
+      "insonia", "dificuldades em dormir", "terrores noturnos",
+      "asma", "enurese"
+    ];
+
+    const perguntasOrientacao = ["o que devo fazer"];
+    const perguntasMedico = ["devo ir ao medico"];
+
+    const respostasOrientacao = [
+      "Em caso de vómitos, oferece líquidos em pequenas quantidades e fracionados.",
+      "Na diarreia, mantém uma boa hidratação e dieta leve.",
+      "Com febre, oferece antipirético se necessário e observa o comportamento.",
+      "Para aliviar a otite, aplica calor local e mantém a criança confortável.",
+      "Se houver dor de ouvidos, tenta acalmar e observa se há febre.",
+      "Na varicela, evita coçar e mantém a criança confortável e fresca.",
+      "Promove o consumo de líquidos e alimentos ricos em fibra para aliviar a obstipação.",
+      "Massaja suavemente a barriga do bebé e tenta embalar num ambiente calmo.",
+      "Se o bebé engasgar, aplica manobras de desobstrução com calma.",
+      "Mantém a criança de lado e não coloques nada na boca durante a convulsão.",
+      "Cria um ambiente calmo e escuro antes de dormir.",
+      "Mantém uma rotina de sono regular e sem ecrãs antes de dormir.",
+      "Deixa a criança sossegar sem acordá-la durante terrores noturnos.",
+      "Utiliza a medicação broncodilatadora conforme prescrição.",
+      "Reduz líquidos à noite e reforça positivamente os bons comportamentos."
+    ];
+
+    const respostasMedico = [
+      "Consulta médica se os vómitos persistirem, houver sangue ou sinais de desidratação.",
+      "Procura ajuda médica se houver sangue nas fezes, febre alta ou desidratação.",
+      "Vai ao médico se a febre não baixar com antipiréticos ou se houver sinais de alarme.",
+      "Consulta médica se a dor de ouvidos não melhorar ou for acompanhada de febre.",
+      "Se a dor for intensa ou persistente, é aconselhável avaliação médica.",
+      "Consulta médica se houver febre prolongada, infecções das lesões ou letargia.",
+      "Consulta se a obstipação causar dor intensa, vómitos ou distensão abdominal.",
+      "Consulta se as cólicas forem muito intensas ou acompanhadas de outros sintomas.",
+      "Se não conseguires desobstruir a via aérea, procura ajuda médica urgente.",
+      "Consulta médica obrigatória após qualquer convulsão febril.",
+      "Consulta se a insónia persistir ou causar alterações no desenvolvimento.",
+      "Consulta se as dificuldades em dormir forem frequentes e alterarem o dia a dia.",
+      "Consulta se os episódios forem muito frequentes ou intensos.",
+      "Consulta se a crise asmática não melhorar com a medicação.",
+      "Consulta se a enurese for nova, persistente ou acompanhada de outros sintomas."
+    ];
+
+    let textoLimpo = input.toLowerCase()
+                          .normalize("NFD")
+                          .replace(/[\u0300-\u036f]/g, "");
+
+    let tipoPergunta = "";
+    if (perguntasOrientacao.some(p => textoLimpo.includes(p))) {
+      tipoPergunta = "orientacao";
+    } else if (perguntasMedico.some(p => textoLimpo.includes(p))) {
+      tipoPergunta = "medico";
+    }
+
+    for (let i = 0; i < sintomas.length; i++) {
+      if (textoLimpo.includes(sintomas[i])) {
+        if (tipoPergunta === "orientacao") {
+          return respostasOrientacao[i];
+        } else if (tipoPergunta === "medico") {
+          return respostasMedico[i];
+        } else {
+          // Só detetou sintoma
+          return respostasOrientacao[i] + "\n\n" + respostasMedico[i];
+        }
+      }
+    }
+
+    return "Desculpa, não consegui identificar sintomas ou perguntas claras.";
+  }
+</script>
+
+</body>
+</html>
