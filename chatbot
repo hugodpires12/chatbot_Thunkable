@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Chatbot de Saúde</title>
-  <style>
+<style>
     body {
         background: #fafaf3;
         font-family: Arial, sans-serif;
@@ -50,7 +50,7 @@
         background: #2c3e50;
         color: #FAFAF3;
     }
-    .chat-messages {
+    .chatMessages {
         flex: 1;
         padding: 12px;
         overflow-y: auto;
@@ -76,14 +76,14 @@
         background: #2972b6;
         color: #FAFAF3;
     }
-    .chat-input-area {
+    .chatInput-area {
         display: flex;
         border-top: 1px solid #e0e0e0;
         padding: 8px;
         background: #fafbfc;
         border-radius: 0 0 10px 10px;
     }
-    .chat-input {
+    .chatInput {
         flex: 1;
         padding: 7px;
         border: 1px solid #cfd8dc;
@@ -112,25 +112,23 @@
   <div class="chatbot-container">
     <div class="chat-header">
       Chat Dr.CUF
-      <button class="clear-btn" id="clear-chat-btn" title="Novo Chat">Nova Conversa</button>
+<button class="clear-btn" id="chatClearBtn" title="Novo Chat">Nova Conversa</button>
     </div>
-    <div class="chat-messages" id="chat-messages">
-      <!-- Cards de perguntas e respostas aparecerão aqui -->
-    </div>
-    <form class="chat-input-area" id="chat-form" autocomplete="off">
-      <input type="text" class="chat-input" id="chat-input" placeholder="Digite sua pergunta..." required>
+    <div class="chatMessages" id="chatMessages"></div>
+    <form class="chatInput-area" id="chatForm" autocomplete="off">
+      <input type="text" class="chatInput" id="chatInput" placeholder="Digite sua pergunta..." required>
       <button type="submit" class="chat-send-btn">Enviar</button>
     </form>
   </div>
 
 <script>
-  const chatMessages = document.getElementById('chat-messages');
-  const chatForm = document.getElementById('chat-form');
-  const chatInput = document.getElementById('chat-input');
-  const clearChatBtn = document.getElementById('clear-chat-btn');
+  let chatMessages = document.getElementById('chatMessages');
+  let chatForm = document.getElementById('chatForm');
+  let chatInput = document.getElementById('chatInput');
+  let clearChatBtn = document.getElementById('chatClearBtn');
 
   function addCard(message, sender) {
-    const card = document.createElement('div');
+    let card = document.createElement('div');
     card.className = 'card ' + sender;
     card.textContent = message;
     chatMessages.appendChild(card);
@@ -139,52 +137,48 @@
 
   chatForm.addEventListener('submit', function(e) {
     e.preventDefault();
-    const userInput = chatInput.value.trim();
+    let userInput = chatInput.value.trim();
     if (!userInput) return;
     addCard(userInput, 'user');
     chatInput.value = '';
-    const botResponse = getBotResponse(userInput);
+    let botResponse = getBotResponse(userInput);
     setTimeout(() => addCard(botResponse, 'bot'), 400);
   });
 
   clearChatBtn.addEventListener('click', function() {
-    clearChat();
+    chatMessages.innerHTML = '';
   });
 
-  function clearChat() {
-    chatMessages.innerHTML = '';
-  }
-
   function getBotResponse(input) {
-    const sintomas = [
+    let sintomas = [
       "vomitos", "diarreia", "febre", "otite", "dor de ouvidos", "varicela",
       "obstipacao", "colicas", "engasgamento", "convulsoes",
       "insonia", "dificuldades em dormir", "terrores noturnos",
       "asma", "enurese"
     ];
 
-    const perguntasOrientacao = ["o que devo fazer"];
-    const perguntasMedico = ["devo ir ao medico"];
+    let perguntasOrientacao = ["o que devo fazer"];
+    let perguntasMedico = ["devo ir ao medico"];
 
-    const respostasOrientacao = [
-      "Em caso de vómitos, oferece líquidos em pequenas quantidades e fracionados.",
-      "Na diarreia, mantém uma boa hidratação e dieta leve.",
-      "Com febre, oferece antipirético se necessário e observa o comportamento.",
-      "Para aliviar a otite, aplica calor local e mantém a criança confortável.",
-      "Se houver dor de ouvidos, tenta acalmar e observa se há febre.",
-      "Na varicela, evita coçar e mantém a criança confortável e fresca.",
-      "Promove o consumo de líquidos e alimentos ricos em fibra para aliviar a obstipação.",
-      "Massaja suavemente a barriga do bebé e tenta embalar num ambiente calmo.",
-      "Se o bebé engasgar, aplica manobras de desobstrução com calma.",
-      "Mantém a criança de lado e não coloques nada na boca durante a convulsão.",
-      "Cria um ambiente calmo e escuro antes de dormir.",
-      "Mantém uma rotina de sono regular e sem ecrãs antes de dormir.",
-      "Deixa a criança sossegar sem acordá-la durante terrores noturnos.",
-      "Utiliza a medicação broncodilatadora conforme prescrição.",
-      "Reduz líquidos à noite e reforça positivamente os bons comportamentos."
+    let respostasOrientacao = [
+      "Em caso de vómitos, ofereça líquidos em pequenas quantidades e fracionados.",
+      "Em casos de diarreia, deve se manter uma boa hidratação e uma dieta leve.",
+      "Com febre, os antipiréticos (ex.: Ben-U-Ron) juntamente com a análise atenta e constante da evolução da febre podem ajudar.",
+      "Para aliviar a otite, a aplicação de calor no local e um ambiente confortável podem ser solução para uma situação aguda.",
+      "Quando há dor de ouvidos, primeiramente deve tentar acalmar a criança e observar se há febre.",
+      "A varicela dá erupção, logo origina muita comichão. No entanto deve-se evitar coçar e manter a criança confortável e fresca.",
+      "Promova o consumo de líquidos e alimentos ricos em fibra para aliviar a obstipação.",
+      "Massaje suavemente a barriga do bebé e tente embalar num ambiente calmo.",
+      "Se a criança se engasgar a ponto de impedir a respiração, deve ser aplicado manobras de desobstrução (palmadinhas nas costas e compressões sobre o peito) com calma.",
+      "Mantenha a criança de lado e não coloque nada na boca durante a convulsão.",
+      "Crie um ambiente calmo e escuro antes de dormir.",
+      "Manter uma rotina de sono regular e sem ecrãs antes de dormir.",
+      "Deixe a criança sossegar sem acordá-la durante terrores noturnos. Para evitar estes casos deve evitar filmes violentos e ingestão de alimentos com cafeína",
+      "Utilize a medicação broncodilatadora conforme prescrição.",
+      "Reduza líquidos à noite e reforce positivamente os bons comportamentos. Não deve humilhar nem culpar a criança, mas não deve suavizar a situação, pelo que a criança deve ser responsável pela troca de pijama e lençóis da cama. Não force o uso da fralda depois dos 4 anos"
     ];
 
-    const respostasMedico = [
+    let respostasMedico = [
       "Consulta médica se os vómitos persistirem, houver sangue ou sinais de desidratação.",
       "Procura ajuda médica se houver sangue nas fezes, febre alta ou desidratação.",
       "Vai ao médico se a febre não baixar com antipiréticos ou se houver sinais de alarme.",
@@ -199,31 +193,32 @@
       "Consulta se as dificuldades em dormir forem frequentes e alterarem o dia a dia.",
       "Consulta se os episódios forem muito frequentes ou intensos.",
       "Consulta se a crise asmática não melhorar com a medicação.",
-      "Consulta se a enurese for nova, persistente ou acompanhada de outros sintomas."
+      "Consulte o médico se a enurese for persistente ou acompanhada de outros sintomas (urina a cheirar mal ou não haver controlo nas fezes)."
     ];
 
     let textoLimpo = input.toLowerCase()
-                          .normalize("NFD")
-                          .replace(/[\u0300-\u036f]/g, "");
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
 
-    let tipoPergunta = "";
-    if (perguntasOrientacao.some(p => textoLimpo.includes(p))) {
-      tipoPergunta = "orientacao";
-    } else if (perguntasMedico.some(p => textoLimpo.includes(p))) {
-      tipoPergunta = "medico";
-    }
+    let encontrouSintoma = sintomas.find((sintoma, i) => {
+      if (textoLimpo.includes(sintoma)) {
+        let respostaOrientacao = respostasOrientacao[i];
+        let respostaMedico = respostasMedico[i];
 
-    for (let i = 0; i < sintomas.length; i++) {
-      if (textoLimpo.includes(sintomas[i])) {
-        if (tipoPergunta === "orientacao") {
-          return respostasOrientacao[i];
-        } else if (tipoPergunta === "medico") {
-          return respostasMedico[i];
+        if (perguntasOrientacao.some(p => textoLimpo.includes(p))) {
+          botResposta = respostaOrientacao;
+        } else if (perguntasMedico.some(p => textoLimpo.includes(p))) {
+          botResposta = respostaMedico;
         } else {
-          // Só detetou sintoma
-          return respostasOrientacao[i] + "\n\n" + respostasMedico[i];
+          botResposta = respostaOrientacao + "\n\n" + respostaMedico;
         }
+        return true;
       }
+      return false;
+    });
+
+    if (encontrouSintoma) {
+      return botResposta;
     }
 
     return "Desculpa, não consegui identificar sintomas ou perguntas claras.";
